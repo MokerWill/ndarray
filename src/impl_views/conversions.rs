@@ -273,8 +273,11 @@ where D: Dimension
 impl<'a, A, D> ArrayViewMut<'a, A, D>
 where D: Dimension
 {
-    // Convert into a read-only view
-    pub(crate) fn into_view(self) -> ArrayView<'a, A, D>
+    /// Convert into a read-only view.
+    ///
+    /// This method consumes the mutable view and returns an `ArrayView` that
+    /// preserves the original lifetime `'a` of the data.
+    pub fn into_view(self) -> ArrayView<'a, A, D>
     {
         unsafe { ArrayView::new(self.parts.ptr, self.parts.dim, self.parts.strides) }
     }
